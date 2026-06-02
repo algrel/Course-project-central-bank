@@ -16,8 +16,6 @@ def name(name):
     name = name.lower()
     for a, b in districts.items():
         name = name.replace(a, b)
-    name = name.replace('федеральный', 'федеральный')
-    name = name.replace('округ', 'округ')
     return name
 
 
@@ -26,8 +24,7 @@ def get_geopoligon(name):
         return geo1[name]
     for key in geo1.keys():
         if key.lower() == name.lower():
-            return geo1[key]
-    return ''  
+            return geo1[key]  
 
 
 df = pd.read_csv('federal_districts_before.csv', sep=';', encoding='utf-8')
