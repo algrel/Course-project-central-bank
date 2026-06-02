@@ -1,8 +1,6 @@
 import pandas as pd
 
-df = pd.read_excel('ставки_до.xlsx', sheet_name='Chart data')
-df['Месяц'] = pd.to_datetime(df['Месяц'])
-type_mapping = {
+type = {
     'МСП до 1 года': 'МСП',
     'МСП свыше 1 года': 'МСП',
     'Нефин до 1 года': 'Нефин',
@@ -11,7 +9,7 @@ type_mapping = {
     'ФЛ свыше 1 года': 'ФЛ'
 }
 
-term_mapping = {
+term = {
     'МСП до 1 года': 'До 1 года',
     'МСП свыше 1 года': 'Свыше 1 года',
     'Нефин до 1 года': 'До 1 года',
@@ -20,14 +18,10 @@ term_mapping = {
     'ФЛ свыше 1 года': 'Свыше 1 года'
 }
 
-result_df = pd.melt(
-    df, 
-    id_vars=['Месяц'], 
-    var_name='Категория', 
-    value_name='Ставка'
-)
-
-result_df['Тип_заемщика'] = result_df['Категория'].map(type_mapping)
-result_df['Срок_кредита'] = result_df['Категория'].map(term_mapping)
-result_df = result_df.sort_values(['Месяц', 'Категория']).reset_index(drop=True)
-result_df.to_excel('ставки_после.xlsx', index=False)
+df = pd.read_excel('rates_before.xlsx', sheet_name='Chart data')
+df['Месяц'] = pd.to_datetime(df['Месяц'])
+result = pd.melt(df, id_vars=['Месяц'], var_name='Категория', value_name='Ставка')
+result['Тип_заемщика'] = result['Категория'].map(type)
+result['Срок_кредита'] = result['Категория'].map(term)
+result = result.sort_values(['Месяц', 'Категория']).reset_index(drop=True)
+result.to_excel('rates_after.xlsx', index=False)
