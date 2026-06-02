@@ -70,4 +70,4 @@ for i, row in df.iterrows():
 
 result = pd.DataFrame(rows)
 result = result.sort_values(['Месяц', 'ФО', 'Категория', 'Срок']).reset_index(drop=True)
-result.to_csv('фо_после.csv', index=False, encoding='utf-8-sig')
+result.to_csv('federal_districts_after.csv', index=False, encoding='utf-8-sig')
